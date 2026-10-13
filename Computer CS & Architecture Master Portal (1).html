@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Computer Science & Architecture Master Application - Annu</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brandDark: '#080c14',
+            cardDark: '#0f172a',
+            panelDark: '#1e293b',
+            accentCyan: '#06b6d4',
+            accentBlue: '#3b82f6',
+            accentAmber: '#f59e0b',
+            accentEmerald: '#10b981',
+            accentPurple: '#8b5cf6',
+            accentRose: '#f43f5e'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Font Awesome Icons & Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #080c14;
+      color: #f1f5f9;
+    }
+    .code-font {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-panel:hover {
+      border-color: rgba(6, 182, 212, 0.35);
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #080c14;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #06b6d4;
+    }
+    .braille-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid #475569;
+      transition: all 0.25s ease;
+    }
+    .braille-dot.active {
+      background-color: #06b6d4;
+      border-color: #22d3ee;
+      box-shadow: 0 0 12px rgba(6, 182, 212, 0.7);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-brandDark text-slate-100 overflow-x-hidden">
+
+  <!-- MANDATORY STUDENT IDENTIFICATION TOP BANNER -->
+  <header class="sticky top-0 z-50 bg-slate-950/95 backdrop-blur-md border-b border-slate-800 shadow-2xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        
+        <!-- Student Information Display -->
+        <div class="flex items-center space-x-4">
+          <div class="p-3 bg-gradient-to-tr from-cyan-600 to-blue-600 rounded-xl shadow-lg shadow-cyan-500/20">
+            <i class="fa-solid fa-laptop-code text-2xl text-white"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-3">
+              <span class="text-xs uppercase tracking-widest font-semibold text-cyan-400">Student Banner</span>
+            </div>
+            <div class="flex items-center gap-4 mt-0.5">
+              <h1 class="text-xl font-extrabold text-white tracking-tight">Name: Annu</h1>
+              <span class="text-slate-600">|</span>
+              <h2 class="text-xl font-extrabold text-amber-400 tracking-tight">Roll No: 1826013</h2>
+            </div>
+          </div>
+        </div>
+
+        <!-- Global Interactive Module Search -->
+        <div class="relative w-full sm:w-80">
+          <input type="text" id="globalSearch" onkeyup="filterModules()" placeholder="Search all 8 topics..." 
+            class="w-full pl-10 pr-4 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-slate-200 placeholder-slate-400 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition">
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-xs"></i>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <div class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row gap-8">
+
+    <!-- SIDE NAVIGATION MENU -->
+    <aside class="w-full md:w-64 flex-shrink-0">
+      <div class="sticky top-24 space-y-2 glass-panel p-4 rounded-2xl shadow-xl">
+        <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest px-2 pb-2 border-b border-slate-800">
+          Module Directory
+        </h3>
+        <nav class="space-y-1 mt-2" id="navContainer">
+          <button onclick="scrollToModule('topic1')" class="nav-btn w-full flex items-center px-3 py-2.5 text-xs font-semibold rounded-xl text-cyan-400 bg-slate-800/80 border border-cyan-500/30 transition text-left">
+            <i class="fa-solid fa-microchip w-6 text-center mr-2"></i> 1. Characteristics & Gens
+          </button>
+          <button onclick="scrollToModule('topic2')" class="nav-btn w-full flex items-center px-3 py-2.5 text-xs font-semibold rounded-xl text-slate-300 hover:bg-slate-800/60 hover:text-cyan-300 transition text-left">
+            <i class="fa-solid fa-diagram-project w-6 text-center mr-2"></i> 2. System Bus & CPU Flow
+          </button>
+          <button onclick="scrollToModule('topic3')" class="nav-btn w-full flex items-center px-3 py-2.5 text-xs font-semibold rounded-xl text-slate-300 hover:bg-slate-800/60 hover:text-cyan-300 transition text-left">
+            <i class="fa-solid fa-id-card w-6 text-center mr-2"></i> 3. Campus Scanning & RFID
+          </button>
+          <button onclick="scrollToModule('topic4')" class="nav-btn w-full flex items-center px-3 py-2.5 text-xs font-semibold rounded-xl text-slate-300 hover:bg-slate-800/60 hover:text-cyan-300 transition text-left">
+            <i class="fa-solid fa-code w-6 text-center mr-2"></i> 4. Low vs High Languages
+          </button>
+          <button onclick="scrollToModule('topic5')" class="nav-btn w-full flex items-center px-3 py-2.5 text-xs font-semibold rounded-xl text-slate-300 hover:bg-slate-800/60 hover:text-cyan-300 transition text-left">
+            <i class="fa-solid fa-pen-nib w-6 text-center mr-2"></i> 5. Point Devices vs Digitizers
+          </button>
+          <button onclick="scrollToModule('topic6')" class="nav-btn w-full flex items-center px-3 py-2.5 text-xs font-semibold rounded-xl text-slate-300 hover:bg-slate-800/60 hover:text-cyan-300 transition text-left">
+            <i class="fa-solid fa-print w-6 text-center mr-2"></i> 6. Plotters vs UHD Monitors
+          </button>
+          <button onclick="scrollToModule('topic7')" class="nav-btn w-full flex items-center px-3 py-2.5 text-xs font-semibold rounded-xl text-slate-300 hover:bg-slate-800/60 hover:text-cyan-300 transition text-left">
+            <i class="fa-solid fa-fingerprint w-6 text-center mr-2"></i> 7. Facial vs Voice Biometrics
+          </button>
+          <button onclick="scrollToModule('topic8')" class="nav-btn w-full flex items-center px-3 py-2.5 text-xs font-semibold rounded-xl text-slate-300 hover:bg-slate-800/60 hover:text-cyan-300 transition text-left">
+            <i class="fa-solid fa-universal-access w-6 text-center mr-2"></i> 8. Hands-Free Workstation
+          </button>
+        </nav>
+      </div>
+    </aside>
+
+    <!-- MAIN MODULE CONTENT AREA -->
+    <main class="flex-1 space-y-12 min-w-0">
+
+      <!-- TOPIC 1 -->
+      <section id="topic1" class="topic-card glass-panel p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-800">
+        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-800">
+          <span class="p-3 bg-amber-500/10 text-amber-400 rounded-xl text-xl"><i class="fa-solid fa-microchip"></i></span>
+          <div>
+            <h2 class="text-xl font-bold text-white">TOPIC 1: Primary Characteristics & 5 Computer Generations</h2>
+            <p class="text-xs text-slate-400 mt-0.5">Deep architectural breakdown of computational traits and hardware technology evolution.</p>
+          </div>
+        </div>
+
+        <!-- Primary Characteristics Grid -->
+        <h3 class="text-sm font-bold text-cyan-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-sliders"></i> Core Architectural Characteristics & Metrics
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+          <div class="p-4 bg-slate-900/80 rounded-xl border border-slate-800 space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-white text-sm"><i class="fa-solid fa-bolt text-amber-400 mr-2"></i>Speed</span>
+              <span class="text-[10px] code-font px-2 py-0.5 bg-amber-500/20 text-amber-300 rounded">MFLOPS / TFLOPS</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Modern digital computers operate at clock frequencies exceeding 5 GHz, executing billions of instructions per second. Speeds are quantified in nanoseconds (<span class="code-font text-cyan-300">10⁻⁹s</span>) and picoseconds (<span class="code-font text-cyan-300">10⁻¹²s</span>) per cycle.
+            </p>
+          </div>
+
+          <div class="p-4 bg-slate-900/80 rounded-xl border border-slate-800 space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-white text-sm"><i class="fa-solid fa-bullseye text-cyan-400 mr-2"></i>Accuracy</span>
+              <span class="text-[10px] code-font px-2 py-0.5 bg-cyan-500/20 text-cyan-300 rounded">64-bit IEEE 754</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Computers deliver absolute mathematical precision based on binary arithmetic algorithms. Errors arise strictly from flawed user inputs or software bugs, governed by the <em>GIGO (Garbage In, Garbage Out)</em> principle.
+            </p>
+          </div>
+
+          <div class="p-4 bg-slate-900/80 rounded-xl border border-slate-800 space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-white text-sm"><i class="fa-solid fa-arrows-spin text-emerald-400 mr-2"></i>Diligence</span>
+              <span class="text-[10px] code-font px-2 py-0.5 bg-emerald-500/20 text-emerald-300 rounded">Zero Fatigue</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Unlike humans, electronic processors operate continuously for weeks or years without fatigue, loss of concentration, or degradation in calculation speed.
+            </p>
+          </div>
+
+          <div class="p-4 bg-slate-900/80 rounded-xl border border-slate-800 space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-white text-sm"><i class="fa-solid fa-cubes text-purple-400 mr-2"></i>Versatility</span>
+              <span class="text-[10px] code-font px-2 py-0.5 bg-purple-500/20 text-purple-300 rounded">Multi-Tasking</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Ability to execute vastly different tasks sequentially or concurrently—switching from complex matrix physics calculus to real-time video streaming within microseconds.
+            </p>
+          </div>
+
+          <div class="p-4 bg-slate-900/80 rounded-xl border border-slate-800 space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-white text-sm"><i class="fa-solid fa-database text-blue-400 mr-2"></i>Storage Capacity</span>
+              <span class="text-[10px] code-font px-2 py-0.5 bg-blue-500/20 text-blue-300 rounded">Terabytes / Petabytes</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Hierarchical memory organization combining high-speed volatile registers and primary RAM with massive non-volatile NVMe solid-state drives and cloud repositories.
+            </p>
+          </div>
+
+          <div class="p-4 bg-slate-900/80 rounded-xl border border-slate-800 space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-white text-sm"><i class="fa-solid fa-gears text-rose-400 mr-2"></i>Automation</span>
+              <span class="text-[10px] code-font px-2 py-0.5 bg-rose-500/20 text-rose-300 rounded">Autonomous Logic</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Once a stored program is loaded into main memory, execution proceeds autonomously under Control Unit direction without manual operator intervention.
+            </p>
+          </div>
+        </div>
+
+        <!-- Detailed 5 Computer Generations Interactive Explorer -->
+        <h3 class="text-sm font-bold text-cyan-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-timeline"></i> The 5 Computer Generations Timeline Matrix
+        </h3>
+
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mb-4">
+          <button onclick="showGenTopic1(1)" id="gen1Btn-1" class="gen1-btn active-gen1 px-3 py-2 text-xs font-semibold rounded-xl bg-cyan-600 text-white transition shadow-md">1st Gen</button>
+          <button onclick="showGenTopic1(2)" id="gen1Btn-2" class="gen1-btn px-3 py-2 text-xs font-semibold rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition">2nd Gen</button>
+          <button onclick="showGenTopic1(3)" id="gen1Btn-3" class="gen1-btn px-3 py-2 text-xs font-semibold rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition">3rd Gen</button>
+          <button onclick="showGenTopic1(4)" id="gen1Btn-4" class="gen1-btn px-3 py-2 text-xs font-semibold rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition">4th Gen</button>
+          <button onclick="showGenTopic1(5)" id="gen1Btn-5" class="gen1-btn px-3 py-2 text-xs font-semibold rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition">5th Gen</button>
+        </div>
+
+        <div id="gen1DetailBox" class="p-5 bg-slate-900/90 rounded-2xl border border-cyan-500/30 text-xs space-y-3">
+          <!-- JS dynamic content injection -->
+        </div>
+      </section>
+
+      <!-- TOPIC 2 -->
+      <section id="topic2" class="topic-card glass-panel p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-800">
+        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-800">
+          <span class="p-3 bg-cyan-500/10 text-cyan-400 rounded-xl text-xl"><i class="fa-solid fa-diagram-project"></i></span>
+          <div>
+            <h2 class="text-xl font-bold text-white">TOPIC 2: Data, Instruction & Control Signal Flow in Architecture</h2>
+            <p class="text-xs text-slate-400 mt-0.5">Functional block diagram interaction between CPU registers, RAM memory, and system bus lines.</p>
+          </div>
+        </div>
+
+        <!-- Architecture Breakdown Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 text-xs">
+          
+          <!-- CPU Component -->
+          <div class="p-5 bg-slate-900/80 rounded-2xl border border-slate-800 space-y-3">
+            <h4 class="font-bold text-amber-400 text-sm flex items-center gap-2">
+              <i class="fa-solid fa-microchip"></i> CPU Internal Subsystems
+            </h4>
+            <ul class="space-y-2 text-slate-300">
+              <li><strong class="text-white">Program Counter (PC):</strong> Holds memory address of next instruction to be fetched.</li>
+              <li><strong class="text-white">Memory Address Register (MAR):</strong> Holds memory location currently being read/written.</li>
+              <li><strong class="text-white">Memory Data Register (MDR):</strong> Stores data coming from or written to main memory.</li>
+              <li><strong class="text-white">Instruction Register (IR):</strong> Stores fetched instruction for Control Unit decoding.</li>
+              <li><strong class="text-white">Accumulator (ACC) / ALU:</strong> Executes math/logic and stores immediate calculation results.</li>
+            </ul>
+          </div>
+
+          <!-- Bus Subsystem -->
+          <div class="p-5 bg-slate-900/80 rounded-2xl border border-slate-800 space-y-3">
+            <h4 class="font-bold text-cyan-400 text-sm flex items-center gap-2">
+              <i class="fa-solid fa-route"></i> System Bus Triad
+            </h4>
+            <ul class="space-y-2 text-slate-300">
+              <li><strong class="text-cyan-300">Data Bus (Bidirectional):</strong> Transfers raw data and opcode bytes between CPU, RAM, and I/O. Bus width (e.g. 64-bit) determines word size.</li>
+              <li><strong class="text-amber-300">Address Bus (Unidirectional):</strong> Transmits target memory addresses from CPU to address decoders. Width determines max RAM capacity (<span class="code-font">2^N</span> bytes).</li>
+              <li><strong class="text-emerald-300">Control Bus (Bidirectional):</strong> Transmits Read/Write enable commands, system clock ticks, and interrupt requests.</li>
+            </ul>
+          </div>
+
+          <!-- Memory & I/O -->
+          <div class="p-5 bg-slate-900/80 rounded-2xl border border-slate-800 space-y-3">
+            <h4 class="font-bold text-emerald-400 text-sm flex items-center gap-2">
+              <i class="fa-solid fa-memory"></i> Memory & I/O Interfaces
+            </h4>
+            <ul class="space-y-2 text-slate-300">
+              <li><strong class="text-white">Main Memory (RAM):</strong> Addressable cell matrix storing active program instructions and variables.</li>
+              <li><strong class="text-white">Memory-Mapped I/O:</strong> I/O device ports share address space with RAM; read/write via standard memory instructions.</li>
+              <li><strong class="text-white">Isolated I/O:</strong> I/O ports use separate address space and dedicated bus commands (<span class="code-font">IN</span> / <span class="code-font">OUT</span>).</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Interactive Visual Bus Flow Simulator -->
+        <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
+            <div>
+              <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                <i class="fa-solid fa-[#06b6d4] fa-rotate text-cyan-400"></i> Interactive CPU Bus Flow & Fetch-Execute Simulator
+              </h3>
+              <p class="text-xs text-slate-400">Click step button to trigger animated signal transfer across address, data, and control lines.</p>
+            </div>
+            <button onclick="stepCpuBusSimulator()" class="px-4 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-semibold text-xs rounded-xl transition shadow-lg flex items-center gap-2">
+              Trigger Next Cycle Step <i class="fa-solid fa-forward"></i>
+            </button>
+          </div>
+
+          <!-- Step Indicators -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6 text-center text-xs">
+            <div id="simStep1" class="p-3 bg-slate-800 rounded-xl border border-slate-700 transition">
+              <span class="font-bold text-amber-400 block mb-1">1. FETCH STEP</span>
+              <span class="text-[11px] text-slate-300">PC -> MAR -> Address Bus -> RAM -> Data Bus -> MDR -> IR</span>
+            </div>
+            <div id="simStep2" class="p-3 bg-slate-800 rounded-xl border border-slate-700 transition">
+              <span class="font-bold text-cyan-400 block mb-1">2. DECODE STEP</span>
+              <span class="text-[11px] text-slate-300">Control Unit decodes opcode; signals timing control lines</span>
+            </div>
+            <div id="simStep3" class="p-3 bg-slate-800 rounded-xl border border-slate-700 transition">
+              <span class="text-xs font-bold text-emerald-400 block mb-1">3. EXECUTE STEP</span>
+              <span class="text-[11px] text-slate-300">ALU computes operation; updates ACC, Flags, or Write RAM</span>
+            </div>
+          </div>
+
+          <!-- Live Bus Monitor Display -->
+          <div class="p-4 bg-slate-950 rounded-xl border border-slate-800 code-font text-xs space-y-2">
+            <div class="flex justify-between items-center text-amber-400 border-b border-slate-800/80 pb-2">
+              <span><i class="fa-solid fa-arrow-right"></i> Address Bus Line: <span id="busAddressVal" class="text-white">0x0000</span></span>
+              <span class="text-[10px] text-slate-500">[Unidirectional]</span>
+            </div>
+            <div class="flex justify-between items-center text-cyan-400 border-b border-slate-800/80 pb-2">
+              <span><i class="fa-solid fa-arrows-left-right"></i> Data Bus Line: <span id="busDataVal" class="text-white">0x00000000</span></span>
+              <span class="text-[10px] text-slate-500">[Bidirectional]</span>
+            </div>
+            <div class="flex justify-between items-center text-emerald-400">
+              <span><i class="fa-solid fa-bolt"></i> Control Bus Signals: <span id="busControlVal" class="text-white">IDLE (MEM_READ = 0, MEM_WRITE = 0)</span></span>
+              <span class="text-[10px] text-slate-500">[Timing/Control]</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TOPIC 3 -->
+      <section id="topic3" class="topic-card glass-panel p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-800">
+        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-800">
+          <span class="p-3 bg-emerald-500/10 text-emerald-400 rounded-xl text-xl"><i class="fa-solid fa-id-card"></i></span>
+          <div>
+            <h2 class="text-xl font-bold text-white">TOPIC 3: Campus Automation - Scanning Devices & Card Readers</h2>
+            <p class="text-xs text-slate-400 mt-0.5">Deployment architecture for automated student attendance and library management.</p>
+          </div>
+        </div>
+
+        <!-- Hardware Specs Comparison -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-xs">
+          
+          <div class="p-5 bg-slate-900/80 rounded-2xl border border-slate-800 space-y-3">
+            <h4 class="font-bold text-amber-400 text-sm flex items-center gap-2">
+              <i class="fa-solid fa-barcode"></i> Optical Data Scanners (Barcode / OMR)
+            </h4>
+            <p class="text-slate-300 leading-relaxed">
+              <strong>Barcode Readers:</strong> Laser diode (650nm) or 2D area CCD sensors project light on alternating dark lines/spaces, measuring reflected light differential. Supports 1D UPC/Code128 and 2D QR codes with error correction.
+            </p>
+            <p class="text-slate-300 leading-relaxed">
+              <strong>OMR (Optical Mark Recognition):</strong> Transmits high-intensity light through pre-printed position matrices to measure light absorption in marked pencil/pen bubbles for automated paper assessment.
+            </p>
+          </div>
+
+          <div class="p-5 bg-slate-900/80 rounded-2xl border border-slate-800 space-y-3">
+            <h4 class="font-bold text-cyan-400 text-sm flex items-center gap-2">
+              <i class="fa-solid fa-wifi"></i> Electronic Smart Card Readers (RFID / NFC)
+            </h4>
+            <p class="text-slate-300 leading-relaxed">
+              <strong>RFID Readers:</strong> Employs 13.56 MHz high-frequency (ISO 14443 / ISO 15693) electromagnetic induction. Reader coil generates an RF field powering passive card microchips within 10cm range.
+            </p>
+            <p class="text-slate-300 leading-relaxed">
+              <strong>Smart Cards & Security:</strong> Embedded secure microcontroller chips storing encrypted student UIDs using AES-128 key diversification and 3-pass mutual authentication to prevent cloning.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Data Flow Pipeline Diagram -->
+        <div class="p-5 bg-slate-900/90 rounded-2xl border border-slate-800 mb-8">
+          <h4 class="font-bold text-white text-xs uppercase tracking-wider mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-network-wired text-emerald-400"></i> End-to-End Campus Data Flow Pipeline
+          </h4>
+          <div class="flex flex-wrap items-center justify-between gap-2 text-center text-xs">
+            <div class="p-3 bg-slate-800 rounded-xl border border-slate-700 flex-1 min-w-[120px]">
+              <span class="font-bold text-cyan-400 block">1. Edge Reader</span>
+              <span class="text-[10px] text-slate-400">RFID Tap / Laser Scan</span>
+            </div>
+            <i class="fa-solid fa-chevron-right text-slate-600 hidden sm:block"></i>
+            <div class="p-3 bg-slate-800 rounded-xl border border-slate-700 flex-1 min-w-[120px]">
+              <span class="font-bold text-amber-400 block">2. Gateway MCU</span>
+              <span class="text-[10px] text-slate-400">Debounce & Cryptography</span>
+            </div>
+            <i class="fa-solid fa-chevron-right text-slate-600 hidden sm:block"></i>
+            <div class="p-3 bg-slate-800 rounded-xl border border-slate-700 flex-1 min-w-[120px]">
+              <span class="font-bold text-purple-400 block">3. REST API</span>
+              <span class="text-[10px] text-slate-400">TLS 1.3 HTTPS Request</span>
+            </div>
+            <i class="fa-solid fa-chevron-right text-slate-600 hidden sm:block"></i>
+            <div class="p-3 bg-slate-800 rounded-xl border border-slate-700 flex-1 min-w-[120px]">
+              <span class="font-bold text-emerald-400 block">4. Central DB</span>
+              <span class="text-[10px] text-slate-400">PostgreSQL Ledger Sync</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Campus Scanner Kiosk Simulator -->
+        <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800">
+          <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-laptop-medical text-emerald-400"></i> Interactive Attendance & Library Terminal Kiosk
+          </h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Action Controls -->
+            <div class="space-y-3">
+              <button onclick="runKioskSim('RFID')" class="w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl transition shadow-lg flex items-center justify-center gap-2">
+                <i class="fa-solid fa-wifi text-lg"></i> Tap Student RFID Smart Card
+              </button>
+              <button onclick="runKioskSim('BARCODE')" class="w-full py-3 px-4 bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs rounded-xl transition shadow-lg flex items-center justify-center gap-2">
+                <i class="fa-solid fa-barcode text-lg"></i> Scan Library Book Barcode
+              </button>
+            </div>
+
+            <!-- Terminal Output Log -->
+            <div id="kioskOutput" class="p-4 bg-slate-950 rounded-xl border border-slate-800 code-font text-xs text-slate-300 min-h-[110px] flex items-center">
+              [SYSTEM IDLE] Tap RFID card or scan barcode to execute terminal operation...
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TOPIC 4 -->
+      <section id="topic4" class="topic-card glass-panel p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-800">
+        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-800">
+          <span class="p-3 bg-purple-500/10 text-purple-400 rounded-xl text-xl"><i class="fa-solid fa-code"></i></span>
+          <div>
+            <h2 class="text-xl font-bold text-white">TOPIC 4: Low-Level vs High-Level Programming Languages</h2>
+            <p class="text-xs text-slate-400 mt-0.5">Comprehensive comparison across execution speed, hardware dependence, and translation pipelines.</p>
+          </div>
+        </div>
+
+        <!-- Comparative Matrix Table -->
+        <div class="overflow-x-auto mb-8">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="bg-slate-800/90 text-cyan-400 border-b border-slate-700">
+                <th class="p-3.5 font-bold">Feature</th>
+                <th class="p-3.5 font-bold">Machine Language</th>
+                <th class="p-3.5 font-bold">Assembly Language</th>
+                <th class="p-3.5 font-bold">High-Level (C++ / Python)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800 text-slate-300">
+              <tr>
+                <td class="p-3.5 font-bold text-white">Execution Speed</td>
+                <td class="p-3.5 text-emerald-400 font-semibold">Maximum (Native Hardware Execute)</td>
+                <td class="p-3.5 text-emerald-300 font-semibold">Near Instantaneous</td>
+                <td class="p-3.5 text-amber-400">Moderate (Requires Translation)</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-bold text-white">Hardware Dependence</td>
+                <td class="p-3.5 text-rose-400">100% Architecture Dependent</td>
+                <td class="p-3.5 text-rose-400">Tied to specific CPU Instruction Set</td>
+                <td class="p-3.5 text-emerald-400 font-semibold">Highly Portable across platforms</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-bold text-white">Translator Required</td>
+                <td class="p-3.5">None (Direct Binary Stream)</td>
+                <td class="p-3.5 text-cyan-300">Assembler</td>
+                <td class="p-3.5 text-purple-300">Compiler or Interpreter</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-bold text-white">Abstraction Level</td>
+                <td class="p-3.5">Zero Abstraction (Raw Bits)</td>
+                <td class="p-3.5">Low Abstraction (Mnemonic Opcodes)</td>
+                <td class="p-3.5 text-cyan-300">High Abstraction (Human Readable Syntax)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Translation Tier Code Pipeline Widget -->
+        <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800">
+          <h3 class="text-sm font-bold text-white mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-layer-group text-purple-400"></i> Code Translation Pipeline Viewer
+          </h3>
+          
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
+            <button onclick="showCodePipeline('python')" id="pipeBtn-python" class="pipe-btn active-pipe px-3 py-2 text-xs font-semibold rounded-xl bg-purple-600 text-white transition">Python (High)</button>
+            <button onclick="showCodePipeline('c')" id="pipeBtn-c" class="pipe-btn px-3 py-2 text-xs font-semibold rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition">C++ (Compiled)</button>
+            <button onclick="showCodePipeline('asm')" id="pipeBtn-asm" class="pipe-btn px-3 py-2 text-xs font-semibold rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition">x86 Assembly</button>
+            <button onclick="showCodePipeline('bin')" id="pipeBtn-bin" class="pipe-btn px-3 py-2 text-xs font-semibold rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition">Machine Hex</button>
+          </div>
+
+          <pre id="codePipelineDisplay" class="bg-slate-950 p-4 rounded-xl border border-slate-800 code-font text-xs text-amber-300 overflow-x-auto leading-relaxed"># Python Code Example (High Level Abstraction)
+def calculate_power(voltage, current):
+    return voltage * current
+
+print(calculate_power(220, 5))</pre>
+        </div>
+      </section>
+
+      <!-- TOPIC 5 -->
+      <section id="topic5" class="topic-card glass-panel p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-800">
+        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-800">
+          <span class="p-3 bg-blue-500/10 text-blue-400 rounded-xl text-xl"><i class="fa-solid fa-pen-nib"></i></span>
+          <div>
+            <h2 class="text-xl font-bold text-white">TOPIC 5: Point-and-Draw Devices vs Graphics Digitizers</h2>
+            <p class="text-xs text-slate-400 mt-0.5">Coordinate tracking mechanisms, pressure sensitivity, and application suitability.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8 text-xs">
+          
+          <div class="p-5 bg-slate-900/80 rounded-2xl border border-slate-800 space-y-3">
+            <h4 class="font-bold text-amber-400 text-sm flex items-center gap-2">
+              <i class="fa-solid fa-mouse"></i> Point-and-Draw Devices (Mouse / Trackball)
+            </h4>
+            <ul class="space-y-2 text-slate-300">
+              <li><strong class="text-white">Coordinate Tracking:</strong> Uses <em>Relative Delta Vectors</em>. Optical CMOS sensors capture floor movement frames, outputting relative displacement offsets (<span class="code-font">ΔX, ΔY</span>).</li>
+              <li><strong class="text-white">Pressure & Tilt:</strong> Zero pressure sensitivity or tilt tracking capability. Binary button switches only.</li>
+              <li><strong class="text-white">Primary Application:</strong> Standard Desktop GUI, web browsing, menu selection, and basic CAD navigation.</li>
+            </ul>
+          </div>
+
+          <div class="p-5 bg-slate-900/80 rounded-2xl border border-slate-800 space-y-3">
+            <h4 class="font-bold text-cyan-400 text-sm flex items-center gap-2">
+              <i class="fa-solid fa-tablet-screen-button"></i> Graphics Digitizers / Drawing Tablets
+            </h4>
+            <ul class="space-y-2 text-slate-300">
+              <li><strong class="text-white">Coordinate Tracking:</strong> Employs <em>Absolute EMR (Electromagnetic Resonance) Grid</em>. Sensor loops map physical tablet corners directly to display pixels.</li>
+              <li><strong class="text-white">Pressure & Tilt:</strong> Capacitive micro-actuator styluses detect up to <strong>8192 pressure levels</strong> and ±60° tilt angle.</li>
+              <li><strong class="text-white">Primary Application:</strong> Digital artwork, 3D anatomical modeling, medical illustration, and precision vector CAD.</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Interactive EMR Stylus & Drawing Canvas Simulator -->
+        <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
+            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-paint-brush text-cyan-400"></i> Interactive EMR Tablet Canvas & Pressure Visualizer
+            </h3>
+            <button onclick="clearDigitizerCanvas()" class="px-3 py-1.5 bg-rose-600/80 hover:bg-rose-500 text-white text-xs font-semibold rounded-lg transition">Clear Canvas</button>
+          </div>
+
+          <div class="flex flex-col md:flex-row gap-6 items-center">
+            <canvas id="topic5Canvas" class="bg-slate-950 border border-slate-700 rounded-xl w-full md:w-2/3 h-52 cursor-crosshair shadow-inner"></canvas>
+            
+            <div class="w-full md:w-1/3 bg-slate-950 p-5 rounded-xl border border-slate-800 text-xs space-y-4">
+              <div>
+                <label class="text-slate-300 font-bold block mb-1">Simulated Stylus Pressure:</label>
+                <input type="range" id="penPressureRange" min="1" max="8192" value="4096" oninput="updatePenPressureVal()" class="w-full accent-cyan-400">
+                <div class="flex justify-between items-center mt-1">
+                  <span class="text-slate-500 text-[10px]">1 Level (Hairline)</span>
+                  <span id="penPressureDisplay" class="text-cyan-400 font-bold code-font">4096 / 8192</span>
+                  <span class="text-slate-500 text-[10px]">8192 (Max Thickness)</span>
+                </div>
+              </div>
+
+              <div class="text-[11px] text-slate-400 leading-relaxed border-t border-slate-800 pt-3">
+                <p>• Draw on the canvas using mouse or touch.</p>
+                <p>• Adjust the pressure slider above to simulate EMR stylus force sensing live.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TOPIC 6 -->
+      <section id="topic6" class="topic-card glass-panel p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-800">
+        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-800">
+          <span class="p-3 bg-pink-500/10 text-pink-400 rounded-xl text-xl"><i class="fa-solid fa-print"></i></span>
+          <div>
+            <h2 class="text-xl font-bold text-white">TOPIC 6: Engineering Blueprints - Plotters vs UHD & Large-Format Printers</h2>
+            <p class="text-xs text-slate-400 mt-0.5">Evaluation of vector line resolution, scalability, and long-term production costs.</p>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto mb-8">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="bg-slate-800/90 text-cyan-400 border-b border-slate-700">
+                <th class="p-3.5 font-bold">Evaluation Parameter</th>
+                <th class="p-3.5 font-bold">Vector Drum / Flatbed Plotter</th>
+                <th class="p-3.5 font-bold">UHD Monitor + Large-Format Inkjet Printer</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800 text-slate-300">
+              <tr>
+                <td class="p-3.5 font-bold text-white">Line Precision & Resolution</td>
+                <td class="p-3.5 text-emerald-400 font-semibold">Continuous Mathematical Vector Tracing (Infinite Precision)</td>
+                <td class="p-3.5 text-cyan-300">High Raster Pixel Density (2400 DPI Output)</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-bold text-white">Media Scalability</td>
+                <td class="p-3.5">Constrained by physical pen gantry dimensions</td>
+                <td class="p-3.5 text-emerald-400 font-semibold">Flexible continuous roll feeds up to 60-inch width (ARCH E)</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-bold text-white">Color Gamut & Speed</td>
+                <td class="p-3.5 text-amber-400">Slow mechanical pen movement; limited pen colors</td>
+                <td class="p-3.5 text-emerald-400 font-semibold">Rapid multi-channel pigment inks; full RGB/CMYK gamut</td>
+              </tr>
+              <tr>
+                <td class="p-3.5 font-bold text-white">Capital & Operational Cost</td>
+                <td class="p-3.5 text-amber-400">High initial CapEx; low per-line ink consumption</td>
+                <td class="p-3.5">Moderate CapEx; recurring OpEx for ink cartridges & printheads</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- TOPIC 7 -->
+      <section id="topic7" class="topic-card glass-panel p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-800">
+        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-800">
+          <span class="p-3 bg-red-500/10 text-red-400 rounded-xl text-xl"><i class="fa-solid fa-fingerprint"></i></span>
+          <div>
+            <h2 class="text-xl font-bold text-white">TOPIC 7: Facial Recognition vs Voice Recognition Biometrics</h2>
+            <p class="text-xs text-slate-400 mt-0.5">Operational reliability and security vulnerability critique in high-noise, public spaces.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+          
+          <!-- Facial -->
+          <div class="p-5 bg-slate-900/80 rounded-2xl border border-slate-800 space-y-3">
+            <h4 class="font-bold text-cyan-400 text-sm flex items-center gap-2">
+              <i class="fa-solid fa-face-smile"></i> Vision-Input (Facial Biometrics)
+            </h4>
+            <p class="text-slate-300 leading-relaxed">
+              <strong>Mechanism:</strong> Uses 3D structured light dot projection or Near-Infrared (NIR) time-of-flight sensors to construct 80+ nodal facial mesh points.
+            </p>
+            <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1 text-rose-300">
+              <span class="font-bold text-rose-400 block"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Vulnerabilities:</span>
+              <p>• Ambient solar IR interference washes out optical sensors outdoors.</p>
+              <p>• Presentation attacks via high-resolution 3D silicone masks or deepfake projection.</p>
+            </div>
+          </div>
+
+          <!-- Voice -->
+          <div class="p-5 bg-slate-900/80 rounded-2xl border border-slate-800 space-y-3">
+            <h4 class="font-bold text-amber-400 text-sm flex items-center gap-2">
+              <i class="fa-solid fa-microphone"></i> Voice-Input (Acoustic Biometrics)
+            </h4>
+            <p class="text-slate-300 leading-relaxed">
+              <strong>Mechanism:</strong> Extracts Mel-Frequency Cepstral Coefficients (MFCCs) and vocal tract resonance harmonics to create unique acoustic voiceprints.
+            </p>
+            <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1 text-rose-300">
+              <span class="font-bold text-rose-400 block"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Vulnerabilities:</span>
+              <p>• High ambient background noise severely degrades Signal-to-Noise Ratio (SNR).</p>
+              <p>• Replay attacks & generative AI voice cloning (e.g. Tacotron / ElevenLabs).</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- TOPIC 8 -->
+      <section id="topic8" class="topic-card glass-panel p-6 sm:p-8 rounded-2xl shadow-2xl border border-slate-800">
+        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-800">
+          <span class="p-3 bg-teal-500/10 text-teal-400 rounded-xl text-xl"><i class="fa-solid fa-universal-access"></i></span>
+          <div>
+            <h2 class="text-xl font-bold text-white">TOPIC 8: Accessible Hands-Free Visually Impaired Workstation</h2>
+            <p class="text-xs text-slate-400 mt-0.5">Integrated assistive non-visual input devices and haptic/speech output synthesizers.</p>
+          </div>
+        </div>
+
+        <!-- Integrated System Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-xs">
+          <div class="p-5 bg-slate-900/80 rounded-2xl border border-slate-800 space-y-2">
+            <h4 class="font-bold text-teal-400 text-sm flex items-center gap-2">
+              <i class="fa-solid fa-keyboard"></i> Non-Visual Input Subsystems
+            </h4>
+            <p class="text-slate-300">• <strong>Beamforming Array Microphones:</strong> Hands-free voice recognition system with active acoustic noise cancellation.</p>
+            <p class="text-slate-300">• <strong>Tactile Braille Keyboards:</strong> Ergonomic chord keypads featuring distinct haptic textures for key location.</p>
+          </div>
+
+          <div class="p-5 bg-slate-900/80 rounded-2xl border border-slate-800 space-y-2">
+            <h4 class="font-bold text-cyan-400 text-sm flex items-center gap-2">
+              <i class="fa-solid fa-volume-high"></i> Haptic & Audio Output Subsystems
+            </h4>
+            <p class="text-slate-300">• <strong>Text-To-Speech (TTS) Synthesizer:</strong> Natural language screen reader delivering real-time voice feedback.</p>
+            <p class="text-slate-300">• <strong>Refreshable Braille Display:</strong> Dynamic piezoelectric actuator pins raising braille dots in real time.</p>
+          </div>
+        </div>
+
+        <!-- Interactive Assistive Technology Simulators -->
+        <div class="bg-slate-900/90 p-6 rounded-2xl border border-slate-800 space-y-6">
+          
+          <!-- Speech Synthesizer Simulator -->
+          <div>
+            <h3 class="text-sm font-bold text-white mb-2 flex items-center gap-2">
+              <i class="fa-solid fa-bullhorn text-teal-400"></i> Interactive Speech Synthesizer (TTS Engine)
+            </h3>
+            <div class="flex gap-2">
+              <input type="text" id="ttsInputText" value="System operational. Hello Annu, welcome to your accessible computer workstation." 
+                class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-4 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+              <button onclick="playTtsSpeech()" class="px-5 py-2 bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs rounded-xl transition shadow-md flex items-center gap-2">
+                <i class="fa-solid fa-play"></i> Speak
+              </button>
+            </div>
+          </div>
+
+          <!-- 4-Cell Dynamic Piezoelectric Braille Display Simulator -->
+          <div class="border-t border-slate-800 pt-5">
+            <h3 class="text-sm font-bold text-white mb-2 flex items-center gap-2">
+              <i class="fa-solid fa-grip-dots text-cyan-400"></i> Interactive 4-Cell Refreshable Braille Pin Display
+            </h3>
+            <p class="text-xs text-slate-400 mb-3">Type any 4 characters below to render physical braille pin height activations:</p>
+
+            <input type="text" id="brailleTextIn" maxlength="4" value="CS18" onkeyup="renderBrailleCells()" 
+              class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2 text-xs text-amber-300 code-font uppercase tracking-widest mb-4">
+
+            <!-- Braille Cells Container -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="brailleDisplayContainer">
+              <!-- Rendered via JavaScript -->
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-950 border-t border-slate-800 py-6 text-center text-xs text-slate-500">
+    <p>Computer CS & Architecture Master Portal &bull; Student Name: <strong class="text-slate-300">Annu</strong> | Roll No: <strong class="text-amber-400">1826013</strong></p>
+  </footer>
+
+  <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+  <script>
+    // Smooth Scrolling to Selected Module
+    function scrollToModule(id) {
+      const el = document.getElementById(id);
+      if(el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    // Global Search Filter
+    function filterModules() {
+      const query = document.getElementById('globalSearch').value.toLowerCase();
+      const cards = document.querySelectorAll('.topic-card');
+      cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        if(text.includes(query)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // TOPIC 1: 5 Generations Explorer Content
+    const gensTopic1Data = {
+      1: {
+        title: "1st Generation (1940 - 1956): Vacuum Tube Logic",
+        tech: "Vacuum Tubes (Thermionic Valves) & Magnetic Drum Memories",
+        speed: "Milliseconds (ms) (~10⁻³ sec)",
+        lang: "Pure Machine Binary Code (0s and 1s)",
+        heat: "Enormous thermal dissipation requiring industrial air cooling",
+        models: "ENIAC, UNIVAC I, EDVAC, IBM 701",
+        desc: "Characterized by huge physical footprint, fragile glass vacuum tubes prone to burnout, and continuous maintenance demands."
+      },
+      2: {
+        title: "2nd Generation (1956 - 1963): Solid-State Transistors",
+        tech: "Discrete Germanium/Silicon Transistors & Magnetic Core Memory",
+        speed: "Microseconds (μs) (~10⁻⁶ sec)",
+        lang: "Assembly Language & Early High-Level (FORTRAN, COBOL)",
+        heat: "Significantly reduced heat output compared to thermionic valves",
+        models: "IBM 7090, IBM 1401, CDC 1604, UNIVAC 1107",
+        desc: "Transistors allowed computers to become smaller, faster, more reliable, and far more energy efficient."
+      },
+      3: {
+        title: "3rd Generation (1964 - 1971): Integrated Circuits (ICs)",
+        tech: "Small Scale (SSI) & Medium Scale Integration (MSI) IC Chips",
+        speed: "Nanoseconds (ns) (~10⁻⁹ sec)",
+        lang: "High-Level Languages (BASIC, Pascal, COBOL-68)",
+        heat: "Moderate heat dissipation managed with standard fan heat-sinks",
+        models: "IBM System/360, PDP-8, PDP-11, Honeywell 6000",
+        desc: "Semiconductor silicon wafers integrated dozens of transistors, enabling multi-programming OS and keyboard/monitor terminals."
+      },
+      4: {
+        title: "4th Generation (1971 - Present): Microprocessors & VLSI",
+        tech: "Very Large Scale (VLSI) & Ultra Large Scale (ULSI) Microprocessors",
+        speed: "Picoseconds (ps) / Billions of FLOPs (GFLOPS)",
+        lang: "Modern Object-Oriented High-Level (C, C++, Java, Python)",
+        heat: "Low per-gate heat dissipation; managed by active heat-pipe fans",
+        models: "Intel 4004, Pentium, Core i9, Apple M-Series, AMD Ryzen",
+        desc: "Entire Central Processing Units fitted onto a single silicon chip, giving rise to personal computers and internet networks."
+      },
+      5: {
+        title: "5th Generation (Present & Future): AI & Quantum Processors",
+        tech: "Parallel Processing, AI Neural Accelerators & Quantum Qubits",
+        speed: "Trillions of FLOPs (TFLOPS) / TeraHertz Quantum Co-processors",
+        lang: "Natural Language Processing, Python AI Frameworks, Qiskit",
+        heat: "Cryogenic liquid nitrogen cooling for quantum computing cores",
+        models: "Supercomputers (Frontier, Fugaku), IBM Quantum System One, Google Sycamore",
+        desc: "Focuses on artificial intelligence, parallel neural processing, voice understanding, and quantum computing states."
+      }
+    };
+
+    function showGenTopic1(num) {
+      for(let i=1; i<=5; i++) {
+        const btn = document.getElementById(`gen1Btn-${i}`);
+        if(i === num) {
+          btn.className = "gen1-btn active-gen1 px-3 py-2 text-xs font-semibold rounded-xl bg-cyan-600 text-white transition shadow-md";
+        } else {
+          btn.className = "gen1-btn px-3 py-2 text-xs font-semibold rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition";
+        }
+      }
+      const data = gensTopic1Data[num];
+      document.getElementById('gen1DetailBox').innerHTML = `
+        <h4 class="font-bold text-amber-400 text-sm mb-2"><i class="fa-solid fa-microchip mr-1.5"></i> ${data.title}</h4>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-slate-300">
+          <p><strong>Primary Technology:</strong> ${data.tech}</p>
+          <p><strong>Execution Speed:</strong> ${data.speed}</p>
+          <p><strong>Software Level:</strong> ${data.lang}</p>
+          <p><strong>Thermal Output:</strong> ${data.heat}</p>
+          <p class="sm:col-span-2"><strong>Classic Models:</strong> <span class="code-font text-cyan-300">${data.models}</span></p>
+        </div>
+        <p class="text-slate-400 border-t border-slate-800 pt-2.5 mt-2">${data.desc}</p>
+      `;
+    }
+    showGenTopic1(1);
+
+    // TOPIC 2: CPU Bus Simulator Step Logic
+    let busSimStep = 0;
+    const busStates = [
+      { step: 1, addr: '0x004A', data: '0x8B05 (MOV EAX)', ctrl: 'MEM_READ = 1, MEM_WRITE = 0, CLK = HIGH' },
+      { step: 2, addr: '0x004A', data: '0x8B05 (DECODING)', ctrl: 'CONTROL_UNIT_DECODE_ACTIVE' },
+      { step: 3, addr: '0x0080', data: '0x000000FF (RESULT)', ctrl: 'ALU_EXEC_ADD, MEM_WRITE = 1' }
+    ];
+
+    function stepCpuBusSimulator() {
+      busSimStep = (busSimStep + 1) % 3;
+      const state = busStates[busSimStep];
+
+      for(let i=1; i<=3; i++) {
+        const el = document.getElementById(`simStep${i}`);
+        if(i === state.step) {
+          el.className = "p-3 bg-cyan-950 border border-cyan-500 rounded-xl transition shadow-lg shadow-cyan-950/50";
+        } else {
+          el.className = "p-3 bg-slate-800 rounded-xl border border-slate-700 transition opacity-60";
+        }
+      }
+
+      document.getElementById('busAddressVal').innerText = state.addr;
+      document.getElementById('busDataVal').innerText = state.data;
+      document.getElementById('busControlVal').innerText = state.ctrl;
+    }
+
+    // TOPIC 3: Kiosk Terminal Simulator
+    function runKioskSim(type) {
+      const output = document.getElementById('kioskOutput');
+      const time = new Date().toLocaleTimeString();
+
+      if(type === 'RFID') {
+        output.innerHTML = `<span class="text-emerald-400 font-bold">[${time}] RFID NFC TAP DETECTED:</span><br>UID: <span class="text-amber-300">04:8F:2A:12</span> | Student: <strong class="text-white">Annu (Roll No: 1826013)</strong><br><span class="text-cyan-400">> Attendance verified & logged to central database.</span>`;
+      } else {
+        output.innerHTML = `<span class="text-amber-400 font-bold">[${time}] OPTICAL BARCODE LASER SCAN:</span><br>ISBN: <span class="text-cyan-300">978-0134685991</span> | Book: Computer Architecture & Systems<br><span class="text-emerald-400">> Library circulation ledger updated successfully.</span>`;
+      }
+    }
+
+    // TOPIC 4: Code Pipeline Switching
+    const codePipelines = {
+      python: `# Python Source Code (High Level Abstraction)
+def calculate_power(voltage, current):
+    return voltage * current
+
+print(calculate_power(220, 5))`,
+      c: `// C++ Compiled Source Code
+#include <iostream>
+
+int calculate_power(int voltage, int current) {
+    return voltage * current;
+}
+
+int main() {
+    std::cout << calculate_power(220, 5);
+    return 0;
+}`,
+      asm: `; x86_64 Assembly Code (Low Level Mnemonics)
+global _main
+section .text
+_main:
+    mov eax, 220
+    imul eax, 5
+    ret`,
+      bin: `;; Raw Machine Code Binary Output (Hexadecimal Representation)
+55 48 89 E5 B8 DC 00 00 00 69 C0 05 00 00 00 5D C3`
+    };
+
+    function showCodePipeline(lang) {
+      ['python', 'c', 'asm', 'bin'].forEach(l => {
+        const btn = document.getElementById(`pipeBtn-${l}`);
+        if(l === lang) {
+          btn.className = "pipe-btn active-pipe px-3 py-2 text-xs font-semibold rounded-xl bg-purple-600 text-white transition";
+        } else {
+          btn.className = "pipe-btn px-3 py-2 text-xs font-semibold rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 transition";
+        }
+      });
+      document.getElementById('codePipelineDisplay').innerText = codePipelines[lang];
+    }
+
+    // TOPIC 5: Canvas Drawing & EMR Stylus Simulator
+    const canvas5 = document.getElementById('topic5Canvas');
+    const ctx5 = canvas5.getContext('2d');
+    let isDrawing5 = false;
+
+    function resizeCanvas5() {
+      if(canvas5) {
+        canvas5.width = canvas5.offsetWidth;
+        canvas5.height = canvas5.offsetHeight;
+      }
+    }
+    window.addEventListener('resize', resizeCanvas5);
+    setTimeout(resizeCanvas5, 150);
+
+    function getCanvas5Pos(e) {
+      const rect = canvas5.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      return {
+        x: clientX - rect.left,
+        y: clientY - rect.top
+      };
+    }
+
+    function startDrawing5(e) {
+      isDrawing5 = true;
+      ctx5.beginPath();
+      const pos = getCanvas5Pos(e);
+      ctx5.moveTo(pos.x, pos.y);
+    }
+
+    function draw5(e) {
+      if(!isDrawing5) return;
+      const pos = getCanvas5Pos(e);
+      const pressureVal = document.getElementById('penPressureRange').value;
+      const lineW = Math.max(1, (pressureVal / 8192) * 14);
+
+      ctx5.lineWidth = lineW;
+      ctx5.lineCap = 'round';
+      ctx5.strokeStyle = '#06b6d4';
+      ctx5.lineTo(pos.x, pos.y);
+      ctx5.stroke();
+    }
+
+    function stopDrawing5() {
+      isDrawing5 = false;
+    }
+
+    if(canvas5) {
+      canvas5.addEventListener('mousedown', startDrawing5);
+      canvas5.addEventListener('mousemove', draw5);
+      window.addEventListener('mouseup', stopDrawing5);
+
+      canvas5.addEventListener('touchstart', startDrawing5);
+      canvas5.addEventListener('touchmove', draw5);
+      canvas5.addEventListener('touchend', stopDrawing5);
+    }
+
+    function clearDigitizerCanvas() {
+      if(ctx5) {
+        ctx5.clearRect(0, 0, canvas5.width, canvas5.height);
+      }
+    }
+
+    function updatePenPressureVal() {
+      const val = document.getElementById('penPressureRange').value;
+      document.getElementById('penPressureDisplay').innerText = `${val} / 8192`;
+    }
+
+    // TOPIC 8: TTS & Dynamic Braille Pin Logic
+    function playTtsSpeech() {
+      const text = document.getElementById('ttsInputText').value;
+      if('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.95;
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert('Text-to-Speech synthesizer not supported in this browser environment.');
+      }
+    }
+
+    const brailleDotMap = {
+      'A': [1,0,0,0,0,0], 'B': [1,1,0,0,0,0], 'C': [1,0,0,1,0,0], 'D': [1,0,0,1,1,0],
+      'E': [1,0,0,0,1,0], 'F': [1,1,0,1,0,0], 'G': [1,1,0,1,1,0], 'H': [1,1,0,0,1,0],
+      'I': [0,1,0,1,0,0], 'J': [0,1,0,1,1,0], 'K': [1,0,1,0,0,0], 'L': [1,1,1,0,0,0],
+      'M': [1,0,1,1,0,0], 'N': [1,0,1,1,1,0], 'O': [1,0,1,0,1,0], 'P': [1,1,1,1,0,0],
+      'Q': [1,1,1,1,1,0], 'R': [1,1,1,0,1,0], 'S': [0,1,1,1,0,0], 'T': [0,1,1,1,1,0],
+      'U': [1,0,1,0,0,1], 'V': [1,1,1,0,0,1], 'W': [0,1,0,1,1,1], 'X': [1,0,1,1,0,1],
+      'Y': [1,0,1,1,1,1], 'Z': [1,0,1,0,1,1], '1': [1,0,0,0,0,0], '8': [1,1,0,0,1,0]
+    };
+
+    function renderBrailleCells() {
+      const text = document.getElementById('brailleTextIn').value.toUpperCase();
+      const container = document.getElementById('brailleDisplayContainer');
+      container.innerHTML = '';
+
+      for(let i=0; i<4; i++) {
+        const char = text[i] || ' ';
+        const dots = brailleDotMap[char] || [0,0,0,0,0,0];
+
+        let dotsHtml = '';
+        dots.forEach(isActive => {
+          dotsHtml += `<div class="braille-dot ${isActive ? 'active' : ''}"></div>`;
+        });
+
+        container.innerHTML += `
+          <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 flex flex-col items-center">
+            <span class="text-xs font-bold text-amber-400 mb-2 code-font">'${char}'</span>
+            <div class="grid grid-cols-2 gap-2.5">
+              ${dotsHtml}
+            </div>
+          </div>
+        `;
+      }
+    }
+    renderBrailleCells();
+  </script>
+
+</body>
+</html>
